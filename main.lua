@@ -54,10 +54,10 @@ function M:preload(job)
 		"-i", tostring(job.file.url),
 		"-o", tostring(cache),
 		"-q", qv,
-    "-s", string.format("h=%d:w=%d", rt.preview.max_height, rt.preview.max_width),
-    "-c", "jpeg",
-    "-t", percent,
-    cover,
+    		"-s", string.format("h=%d:w=%d", rt.preview.max_height, rt.preview.max_width),
+    		"-c", "jpeg",
+    		"-t", percent,
+    		cover,
 	}):status()
 
 	if status then
