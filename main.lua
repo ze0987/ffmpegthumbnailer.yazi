@@ -1,5 +1,4 @@
 local M = {}
-local qv = math.floor(rt.preview.image_quality / 10)
 
 function M:peek(job)
 	local start, cache = os.clock(), ya.file_cache(job)
@@ -43,12 +42,9 @@ function M:preload(job)
 	if cha and cha.len > 0 then
 		return true
 	end
-
-	local cover = ""
-	if percent == 5 then
-		cover = "-m"
-	end
-
+	
+	local qv = math.floor(rt.preview.image_quality / 10)
+	local emb = (percent == 5) and "-m" or ""
 	-- stylua: ignore
 	local status, err = Command("ffmpegthumbnailer"):args({
 		"-i", tostring(job.file.url),
@@ -57,7 +53,7 @@ function M:preload(job)
     		"-s", string.format("h=%d:w=%d", rt.preview.max_height, rt.preview.max_width),
     		"-c", "jpeg",
     		"-t", percent,
-    		cover,
+    		emb,
 	}):status()
 
 	if status then
