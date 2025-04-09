@@ -42,7 +42,7 @@ function M:preload(job)
 	if cha and cha.len > 0 then
 		return true
 	end
-	
+
 	local qv = math.floor(rt.preview.image_quality / 10)
 	local emb = (percent == 5) and "-m" or ""
 	-- stylua: ignore
@@ -50,10 +50,10 @@ function M:preload(job)
 		"-i", tostring(job.file.url),
 		"-o", tostring(cache),
 		"-q", qv,
-    		"-s", string.format("h=%d:w=%d", rt.preview.max_height, rt.preview.max_width),
-    		"-c", "jpeg",
-    		"-t", percent,
-    		emb,
+		"-s", string.format("h=%d:w=%d", rt.preview.max_height, rt.preview.max_width),
+		"-c", "jpeg",
+		"-t", percent,
+		emb,
 	}):status()
 
 	if status then
