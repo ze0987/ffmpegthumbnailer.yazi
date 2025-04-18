@@ -20,7 +20,7 @@ ya pack -a 'ze0987/ffmpegthumbnailer'
 
 ## Usage
 
-Add this to your `yazi.toml`:
+Add the following to your `yazi.toml`:
 
 ```toml
 [plugin]
@@ -31,4 +31,8 @@ prepend_previewers = [
 prepend_preloaders = [
   { mime = "video/*", run = "ffmpegthumbnailer" },
 ]
+```
+Don't forget to clear the Yazi cache before first use:
+```sh
+yazi --clear-cache
 ```
