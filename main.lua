@@ -46,7 +46,7 @@ function M:preload(job)
 	local qv = math.floor(rt.preview.image_quality / 10)
 	local emb = (percent == 5) and "-m" or ""
 	-- stylua: ignore
-	local status, err = Command("ffmpegthumbnailer"):args({
+	local status, err = Command("ffmpegthumbnailer"):arg({
 		"-i", tostring(job.file.url),
 		"-o", tostring(cache),
 		"-q", qv,
@@ -107,7 +107,7 @@ end
 
 function M.list_meta(url, entries)
 	local output, err =
-		Command("ffprobe"):args({ "-v", "quiet", "-show_entries", entries, "-of", "json=c=1", tostring(url) }):output()
+		Command("ffprobe"):arg({ "-v", "quiet", "-show_entries", entries, "-of", "json=c=1", tostring(url) }):output()
 	if not output then
 		return nil, Err("Failed to start `ffprobe`, error: %s", err)
 	end
