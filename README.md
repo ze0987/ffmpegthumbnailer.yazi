@@ -9,7 +9,7 @@ An alternative, slightly modified [video](https://github.com/sxyazi/yazi/blob/ma
 ## Installation
 
 ```sh
-ya pack -a 'ze0987/ffmpegthumbnailer'
+ya pkg add 'ze0987/ffmpegthumbnailer'
 ```
 
 ## Usage
@@ -25,8 +25,4 @@ prepend_previewers = [
 prepend_preloaders = [
   { mime = "video/*", run = "ffmpegthumbnailer" },
 ]
-```
-Don't forget to clear the Yazi cache before first use:
-```sh
-yazi --clear-cache
 ```
