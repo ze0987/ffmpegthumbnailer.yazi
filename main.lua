@@ -29,7 +29,7 @@ end
 function M:preload(job)
 	local percent = 5 + job.skip
 	if percent > 95 then
-		ya.mgr_emit("peek", { 90, only_if = job.file.url, upper_bound = true })
+		ya.mgr_emit("peek", { 90, only_if = job.file.path, upper_bound = true })
 		return false
 	end
 
@@ -47,7 +47,7 @@ function M:preload(job)
 	local emb = (percent == 5) and "-m" or ""
 	-- stylua: ignore
 	local status, err = Command("ffmpegthumbnailer"):arg({
-		"-i", tostring(job.file.url),
+		"-i", tostring(job.file.path),
 		"-o", tostring(cache),
 		"-q", qv,
 		"-s", string.format("h=%d:w=%d", rt.preview.max_height, rt.preview.max_width),
@@ -80,7 +80,7 @@ function M:spot(job)
 end
 
 function M:spot_base(job)
-	local meta, err = self.list_meta(job.file.url, "format=duration:stream=codec_name,codec_type,width,height")
+	local meta, err = self.list_meta(job.file.path, "format=duration:stream=codec_name,codec_type,width,height")
 	if not meta then
 		ya.err(tostring(err))
 		return {}
@@ -105,9 +105,9 @@ function M:spot_base(job)
 	return rows
 end
 
-function M.list_meta(url, entries)
+function M.list_meta(path, entries)
 	local output, err =
-		Command("ffprobe"):arg({ "-v", "quiet", "-show_entries", entries, "-of", "json=c=1", tostring(url) }):output()
+		Command("ffprobe"):arg({ "-v", "quiet", "-show_entries", entries, "-of", "json=c=1", tostring(path) }):output()
 	if not output then
 		return nil, Err("Failed to start `ffprobe`, error: %s", err)
 	end
